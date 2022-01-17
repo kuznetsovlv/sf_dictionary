@@ -7,6 +7,7 @@ class WIO;
 
 const WIO *getWIO();
 
+//Nead to get unbuffered wchar_t symbols. Used code from https://www.linux.org.ru/forum/development/5392862
 class WIO final
 {
 	private:
