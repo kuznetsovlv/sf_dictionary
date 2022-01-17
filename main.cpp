@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <exception>
+#include "trie.h"
 #include "wio.h"
 
 int main()
