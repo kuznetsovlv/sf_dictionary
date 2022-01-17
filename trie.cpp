@@ -27,8 +27,7 @@ Trie::Trie(const std::wstring& letters):_root(nullptr)
 	size_t index = 0;
 	for(wchar_t key: letters)
 	{
-		auto search = _keys.find(key);
-		if(search == _keys.end())
+		if(!_keys.contains(key))
 		{
 			_keys[key] = index++;
 		}
@@ -95,6 +94,36 @@ void Trie::coppyNode(const Node *from, Node *to)
 	}
 }
 
+void Trie::find(const Node *root, std::vector<std::wstring> &res, std::vector<wchar_t> &buf, size_t index)const
+{
+	if(root->_endOfWord)
+	{
+		std::wstring str;
+		for(size_t i = 0; i < index; ++i)
+		{
+			str.push_back(buf[i]);
+		}
+		res.push_back(str);
+	}
+
+	for(const auto& [c, i]: _keys)
+	{
+		if(root->_children[i])
+		{
+			if(index < buf.size())
+			{
+				buf[index] = c;
+			}
+			else
+			{
+				buf.push_back(c);
+			}
+
+			find(root->_children[i], res, buf, index + 1);
+		}
+	}
+}
+
 Trie &Trie::operator=(const Trie &that)
 {
 	_keys = that._keys;
@@ -135,6 +164,32 @@ void Trie::add(const std::wstring &str)
 	}
 
 	node->_endOfWord = true;
+}
+
+const std::vector<std::wstring> Trie::words(const std::wstring &str)
+{
+	std::vector<std::wstring> res;
+
+	if(!str.empty() && _root)
+	{
+		size_t index = 0;
+		std::vector<wchar_t> buf;
+		Node *node = _root;
+
+		for(wchar_t c: str)
+		{
+			node = child(node, c);
+			if(!node)
+			{
+				return res;
+			}
+			buf.push_back(c);
+			++index;
+		}
+		find(node, res, buf, index);
+	}
+
+	return res;
 }
 
 const size_t Trie::alphabetSize()const noexcept

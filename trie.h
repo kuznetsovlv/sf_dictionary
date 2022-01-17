@@ -29,6 +29,7 @@ class Trie final
 	Node *add(Node*, wchar_t);
 	Node *child(const Node*, wchar_t)noexcept;
 	void coppyNode(const Node*, Node*);
+	void find(const Node*, std::vector<std::wstring>&, std::vector<wchar_t>&, size_t)const;
 
 	public:
 	Trie(const std::wstring&);
@@ -40,6 +41,6 @@ class Trie final
 	Trie& operator=(const Trie&&)noexcept;
 
 	void add(const std::wstring&);
-	const std::vector<std::wstring> words(const std::wstring&)const noexcept;
+	const std::vector<std::wstring> words(const std::wstring&);
 	const size_t alphabetSize()const noexcept;
 };
