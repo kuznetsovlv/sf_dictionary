@@ -7,7 +7,8 @@ dictionary: ${objects}
 	gcc -o dictionary ${objects} -lstdc++
 
 main.o:	trie.h wio.h
-tire.o: trie.h
+trie.o: trie.cpp trie.h
+	gcc -c -o trie.o trie.cpp -std=c++2a
 wio.o: wio.h
 
 .PHONY: clean
