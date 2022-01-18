@@ -3,6 +3,10 @@
 #include <string>
 #include <termios.h>
 
+extern const wchar_t TAB;
+extern const wchar_t SPACE;
+extern const wchar_t ENTER;
+
 class WIO;
 
 const WIO *getWIO();

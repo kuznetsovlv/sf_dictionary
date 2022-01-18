@@ -10,6 +10,10 @@
 #include <termios.h>
 #include "wio.h"
 
+const wchar_t TAB = 0x9;
+const wchar_t SPACE = 0x20;
+const wchar_t ENTER = 0xa;
+
 std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
 
 const size_t CHAR_SIZE = 8 * sizeof(wchar_t);
@@ -70,7 +74,7 @@ void WIO::out(const wchar_t c)const
 
 void WIO::test(const wchar_t c)const
 {
-	std::cout << converter.to_bytes(c) << " - code: " << static_cast<int>(c) << " bits: ";
+	std::cout << converter.to_bytes(c) << " - code: " << std::hex << std::showbase << static_cast<int>(c) << std::dec << " bits: ";
 
 	for(size_t i = 0; i < CHAR_SIZE; ++i)
 	{
