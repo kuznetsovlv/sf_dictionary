@@ -1,9 +1,9 @@
-#include<map>
-#include<vector>
-#include<string>
+#include <map>
+#include <vector>
+#include <string>
 #include "trie.h"
 
-Node::Node(size_t size):_endOfWord(false)
+Node::Node(const size_t size):_endOfWord(false)
 {
 	for(size_t i = 0; i < size; ++i)
 	{
@@ -38,10 +38,19 @@ Trie::Trie(const Trie &that)
 {
 	_keys = that._keys;
 
+	if(_root)
+	{
+		delete _root;
+	}
+
 	if(that._root)
 	{
 		_root = new Node(_keys.size());
 		coppyNode(that._root, _root);
+	}
+	else
+	{
+		_root = nullptr;
 	}
 }
 
@@ -64,8 +73,13 @@ Trie::~Trie()
 	}
 }
 
-Node *Trie::add(Node* root, wchar_t c)
+Node *Trie::add(Node* root, const wchar_t c)
 {
+	if(!_keys.contains(c))
+	{
+		return nullptr;
+	}
+
 	Node *node = child(root, c);
 
 	if(!node)
@@ -77,9 +91,9 @@ Node *Trie::add(Node* root, wchar_t c)
 	return node;
 }
 
-Node *Trie::child(const Node* root, wchar_t c)noexcept
+Node *Trie::child(const Node* root, const wchar_t c)noexcept
 {
-	return root->_children[_keys[c]];
+	return _keys.contains(c) ? root->_children[_keys[c]] : nullptr;
 }
 
 void Trie::coppyNode(const Node *from, Node *to)
@@ -126,12 +140,21 @@ void Trie::find(const Node *root, std::vector<std::wstring> &res, std::vector<wc
 
 Trie &Trie::operator=(const Trie &that)
 {
+	if(_root)
+	{
+		delete _root;
+	}
+
 	_keys = that._keys;
 
 	if(that._root)
 	{
 		_root = new Node(_keys.size());
 		coppyNode(that._root, _root);
+	}
+	else
+	{
+		_root = nullptr;
 	}
 
 	return *this;

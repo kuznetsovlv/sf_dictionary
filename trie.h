@@ -9,7 +9,7 @@ class Node final
 	private:
 	bool _endOfWord;
 	std::vector<Node*> _children;
-	Node(size_t);
+	Node(const size_t);
 	Node(Node&) = delete;
 	Node(Node&&) = delete;
 	~Node();
@@ -26,8 +26,8 @@ class Trie final
 	std::map<wchar_t, size_t> _keys;
 	Node *_root;
 
-	Node *add(Node*, wchar_t);
-	Node *child(const Node*, wchar_t)noexcept;
+	Node *add(Node*, const wchar_t);
+	Node *child(const Node*, const wchar_t)noexcept;
 	void coppyNode(const Node*, Node*);
 	void find(const Node*, std::vector<std::wstring>&, std::vector<wchar_t>&, size_t)const;
 
