@@ -2,15 +2,20 @@
 #include <string>
 #include <vector>
 #include <exception>
+#include "fill.h"
 #include "trie.h"
 #include "wio.h"
+
+const std::wstring ALPHABET = L"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 
 int main()
 {
 	try
 	{
 		const WIO *wio = getWIO();
-		Trie dict(L"");
+		Trie dict(ALPHABET);
+
+		fill(dict, L"grandmother grand gramm go mother mummy cat car мама книга кирка");
 
 		wchar_t wc;
 		std::wstring text, word;
@@ -19,23 +24,23 @@ int main()
 		do
 		{
 			wc = wio->in();
+			//wio->test(wc);
 
 			switch(wc)
 			{
-				case 0x20:
+				case 0x20:	//SPACE
 					word.clear();
 					words.clear();
 					text.push_back(wc);
 					break;
-				case 0x9:
+				case 0x9:	//TAB
 					if(words.size())
 					{
+						wio->out(0xa);
 						for(std::wstring str: words)
 						{
-							wio->out(0xa);
 							wio->out(str, true);
 						}
-						wio->out(text);
 						words.clear();
 					}
 					else if(!word.empty())
@@ -47,17 +52,25 @@ int main()
 							{
 								word.push_back(words[0][i]);
 								text.push_back(words[0][i]);
-								wio->out(words[0][i]);
 							}
 							words.clear();
 						}
 					}
-					wio->out(0xd);
+					wio->out(0xa);
+					wio->out(text);
+					break;
+				case 0xa:	//ENTER
 					break;
 				default:
-					word.push_back(wc);
-					words.clear();
-					text.push_back(wc);
+						if(ALPHABET.find(wc) != std::string::npos)
+						{
+							if(!words.empty())
+							{
+								words.clear();
+							}
+							word.push_back(wc);
+							text.push_back(wc);
+						}
 			}
 		} while(wc != 0xa);
 	}

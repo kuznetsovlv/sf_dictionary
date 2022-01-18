@@ -65,6 +65,10 @@ void WIO::out(const std::wstring &str, const bool withNextLine)const
 	{
 		std::cout << std::endl;
 	}
+	else
+	{
+		fflush(stdout);
+	}
 }
 
 void WIO::out(const wchar_t c, const bool withNextLine)const
@@ -73,6 +77,10 @@ void WIO::out(const wchar_t c, const bool withNextLine)const
 	if(withNextLine)
 	{
 		std::cout << std::endl;
+	}
+	else
+	{
+		fflush(stdout);
 	}
 }
 

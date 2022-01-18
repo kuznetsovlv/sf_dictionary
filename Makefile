@@ -1,12 +1,13 @@
 #Makefile
-objects = main.o trie.o wio.o
+objects = main.o fill.o trie.o wio.o
 
 .PHONY: all
 all: dictionary
 dictionary: ${objects}
 	gcc -o dictionary ${objects} -lstdc++
 
-main.o:	trie.h wio.h
+main.o:	fill.h trie.h wio.h
+fill.o: fill.h trie.h
 trie.o: trie.cpp trie.h
 	gcc -c -o trie.o trie.cpp -std=c++2a
 wio.o: wio.h
