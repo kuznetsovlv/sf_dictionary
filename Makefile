@@ -1,4 +1,4 @@
-#Makefile
+#Makefile gcc 9.3.0
 objects = main.o fill.o trie.o wio.o
 
 .PHONY: all
