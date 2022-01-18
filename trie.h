@@ -41,6 +41,6 @@ class Trie final
 	Trie& operator=(const Trie&&)noexcept;
 
 	void add(const std::wstring&);
-	const std::vector<std::wstring> words(const std::wstring&);
+	std::vector<std::wstring> words(const std::wstring&);
 	const size_t alphabetSize()const noexcept;
 };

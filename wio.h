@@ -3,10 +3,6 @@
 #include <string>
 #include <termios.h>
 
-extern const wchar_t TAB;
-extern const wchar_t SPACE;
-extern const wchar_t ENTER;
-
 class WIO;
 
 const WIO *getWIO();
@@ -24,8 +20,8 @@ class WIO final
 	~WIO();
 
 	const wchar_t in()const;
-	void out(const std::wstring&)const;
-	void out(const wchar_t)const;
+	void out(const std::wstring&, const bool = false)const;
+	void out(const wchar_t, const bool = false)const;
 	void test(const wchar_t)const;
 	void test(const std::wstring&)const;
 

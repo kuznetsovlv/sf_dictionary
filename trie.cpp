@@ -166,7 +166,7 @@ void Trie::add(const std::wstring &str)
 	node->_endOfWord = true;
 }
 
-const std::vector<std::wstring> Trie::words(const std::wstring &str)
+std::vector<std::wstring> Trie::words(const std::wstring &str)
 {
 	std::vector<std::wstring> res;
 
